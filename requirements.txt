@@ -1,1 +1,2 @@
-zlgcan>=1.1.0
+# No pip packages required — uses ctypes to call zlgcan.dll from the SDK.
+# The ZLG SDK DLLs are in: zlgcan(20260414)/zlgcan_x64/

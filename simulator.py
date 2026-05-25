@@ -223,11 +223,11 @@ def main():
         mode=mode,
     )
 
+    sent_count = 0
+    session_count = 0
+
     try:
         can.open()
-
-        sent_count = 0
-        session_count = 0
 
         while True:
             session = ChargingSession()
