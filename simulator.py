@@ -141,12 +141,12 @@ class ChargingSession:
             # BCS — Battery Charging Status (BMS → Charger)
             measured_v = int((395.0 + soc * 0.55) / 0.1)
             measured_i = int((120.0 - soc * 0.7 + 400) / 0.1)
-            bcs_data = struct.pack('>H', measured_v)
-            bcs_data += struct.pack('>H', measured_i)
-            bcs_data += b'\x00'
-            bcs_data += bytes([soc])
-            bcs_data += struct.pack('>H', max(0, int((95 - soc) * 0.4)))  # remaining min
-            bcs_data += b'\x00'
+            bcs_data = struct.pack('>H', measured_v)      # bytes 0-1
+            bcs_data += struct.pack('>H', measured_i)      # bytes 2-3
+            bcs_data += b'\x00'                             # byte 4: status flags
+            bcs_data += b'\x00'                             # byte 5: reserved
+            bcs_data += bytes([soc])                        # byte 6: SOC (%)
+            bcs_data += struct.pack('>H', max(0, int((95 - soc) * 0.4)))  # bytes 7-8: remaining min
             msgs.append(build_msg(PF_BCS, ADDR_CHARGER, ADDR_BMS, bcs_data))
 
             # CCS — Charger Charging Status (Charger → BMS)
